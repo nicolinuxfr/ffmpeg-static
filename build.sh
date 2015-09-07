@@ -53,7 +53,8 @@ cd $BUILD_DIR
 ../fetchurl "http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz"
 ../fetchurl "http://downloads.xiph.org/releases/opus/opus-1.1.tar.gz"
 ../fetchurl "https://www.libsdl.org/release/SDL-1.2.15.tar.gz"
-../fetchurl "http://www.ffmpeg.org/releases/ffmpeg-2.3.3.tar.bz2"
+../fetchurl "http://ffmpeg.org/releases/ffmpeg-2.7.2.tar.bz2"
+#../fetchurl "http://www.ffmpeg.org/releases/ffmpeg-2.3.3.tar.bz2"
 
 echo "*** Building yasm ***"
 cd $BUILD_DIR/yasm*
@@ -144,10 +145,10 @@ cd $BUILD_DIR/SDL*
 make -j $jval
 make install
 
-echo "*** Run SDL Test ***"
-gcc $CFLAGS -o sdltest sdltest.c  $LDFLAGS -lSDL
-./sdltest
-echo "*** SDL library is Okay! ***"
+#echo "*** Run SDL Test ***"
+#gcc $CFLAGS -o sdltest sdltest.c  $LDFLAGS -lSDL
+#./sdltest
+#echo "*** SDL library is Okay! ***"
 
 # FIXME: only OS-specific
 rm -f "$TARGET_DIR/lib/*.dylib"
