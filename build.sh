@@ -144,6 +144,11 @@ cd $BUILD_DIR/SDL*
 make -j $jval
 make install
 
+echo "*** Run SDL Test ***"
+gcc $CFLAGS -o sdltest sdltest.c  $LDFLAGS -lSDL
+./sdltest
+echo "*** SDL library is Okay! ***"
+
 # FIXME: only OS-specific
 rm -f "$TARGET_DIR/lib/*.dylib"
 rm -f "$TARGET_DIR/lib/*.so"
@@ -151,5 +156,5 @@ rm -f "$TARGET_DIR/lib/*.so"
 # FFMpeg
 echo "*** Building FFmpeg ***"
 cd $BUILD_DIR/ffmpeg*
-CFLAGS="-I$TARGET_DIR/include" LDFLAGS="-L$TARGET_DIR/lib -lm" ./configure --prefix=${OUTPUT_DIR:-$TARGET_DIR} --extra-cflags="-I$TARGET_DIR/include -static" --extra-ldflags="-L$TARGET_DIR/lib -lm -static" --extra-version=static --disable-debug --disable-shared --enable-static --extra-cflags=--static --enable-ffplay --disable-ffserver --disable-doc --enable-gpl --enable-pthreads --enable-postproc --enable-gray --enable-runtime-cpudetect --enable-libfaac --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid --enable-bzlib --enable-zlib --enable-nonfree --enable-version3 --enable-libvpx --disable-devices
+CFLAGS="-I$TARGET_DIR/include" LDFLAGS="-L$TARGET_DIR/lib -lm" ./configure --prefix=${OUTPUT_DIR:-$TARGET_DIR} --extra-cflags="-I$TARGET_DIR/include -static" --extra-ldflags="-L$TARGET_DIR/lib -lm -lSDL -static" --extra-version=static --disable-debug --disable-shared --enable-static --extra-cflags=--static --enable-ffplay --disable-ffserver --disable-doc --enable-gpl --enable-pthreads --enable-postproc --enable-gray --enable-runtime-cpudetect --enable-libfaac --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid --enable-bzlib --enable-zlib --enable-nonfree --enable-version3 --enable-libvpx --disable-devices
 make -j $jval && make install
