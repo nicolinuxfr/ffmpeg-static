@@ -78,8 +78,8 @@ mkdir -p "$CACHE_DIR"
 # Fetch
 if [ "$CACHE" -eq 0 ] || [ ! -f "$cache_file" ]; then
   rm -rf "$tmp_file"
-  sh curl -L -o "$tmp_file" "$URL"
-  sh mv "$tmp_file" "$cache_file"
+  curl -L -x http://web-proxy.oa.com:8080 -o "$tmp_file" "$URL"
+  mv "$tmp_file" "$cache_file"
 fi
 
 # TODO: checksums
