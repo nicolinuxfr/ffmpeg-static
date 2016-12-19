@@ -17,7 +17,7 @@ Build dependencies
     # OS X
     # install XCode, it can be found at http://developer.apple.com/
     # (apple login needed)
-    # <FIXME???>
+    # brew install libtool autoconf cmake automake
 
 Build & "install"
 -----------------
