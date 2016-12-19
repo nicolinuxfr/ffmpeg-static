@@ -233,7 +233,7 @@ if which nproc;then
 elif [ -f /proc/cpuinfo ];then
 	NPROC="`grep -c ^processor /proc/cpuinfo`"
 elif which sysctl;then
-	NPROC="sysctl -n hw.ncpu"
+	NPROC="`sysctl -n hw.ncpu`"
 fi
 
 # FFMpeg
