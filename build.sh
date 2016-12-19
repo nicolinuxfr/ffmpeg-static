@@ -236,6 +236,17 @@ elif which sysctl;then
 	NPROC="`sysctl -n hw.ncpu`"
 fi
 
+FFMPEG_EXTRA_LDFLAG=""
+
+case "$OSTYPE" in
+  #solaris*) echo "SOLARIS" ;;
+  darwin*)  FFMPEG_EXTRA_LDFLAG="-framework CoreText" ;; 
+  #linux*)   echo "LINUX" ;;
+  #bsd*)     echo "BSD" ;;
+  #msys*)    echo "WINDOWS" ;;
+  #*)        echo "unknown: $OSTYPE" ;;
+esac
+
 # FFMpeg
 echo "*** Building FFmpeg ***"
 cd $BUILD_DIR/FFmpeg*
@@ -244,7 +255,7 @@ PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig" ./configure \
   --prefix="$TARGET_DIR" \
   --pkg-config-flags="--static" \
   --extra-cflags="-I$TARGET_DIR/include" \
-  --extra-ldflags="-L$TARGET_DIR/lib" \
+  --extra-ldflags="-L$TARGET_DIR/lib $FFMPEG_EXTRA_LDFLAG" \
   --bindir="$BIN_DIR" \
   --enable-ffplay \
   --enable-ffserver \
