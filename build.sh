@@ -144,7 +144,7 @@ PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 
 NPROC=1
-if which `nproc`;then
+if which nproc;then
 	NPROC="`nproc`"
 elif [ -f /proc/cpuinfo ];then
 	NPROC="`grep -c ^processor /proc/cpuinfo`"
