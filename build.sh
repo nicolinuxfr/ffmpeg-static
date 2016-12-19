@@ -94,6 +94,48 @@ download \
   "https://github.com/webmproject/libvpx/archive/"
 
 download \
+  "freetype-2.7.tar.gz" \
+  "" \
+  "337139e5c7c5bd645fe130608e0fa8b5" \
+  "http://download.savannah.gnu.org/releases/freetype/"
+
+download \
+  "fribidi-0.19.7.tar.bz2" \
+  "" \
+  "6c7e7cfdd39c908f7ac619351c1c5c23" \
+  "http://fribidi.org/download/"
+
+download \
+  "libass-0.13.4.tar.gz" \
+  "" \
+  "158e242c1bd890866e95526910cb6873" \
+  "https://github.com/libass/libass/releases/download/0.13.4/"
+
+download \
+  "libogg-1.3.1.tar.gz" \
+  "" \
+  "ba526cd8f4403a5d351a9efaa8608fbc" \
+  "http://downloads.xiph.org/releases/ogg/"
+
+download \
+  "libvorbis-1.3.3.tar.gz" \
+  "" \
+  "6b1a36f0d72332fae5130688e65efe1f" \
+  "http://downloads.xiph.org/releases/vorbis/"
+
+download \
+  "SDL-1.2.15.tar.gz" \
+  "" \
+  "9d96df8417572a2afb781a7c4c811a85" \
+  "http://www.libsdl.org/release/"
+
+download \
+  "libtheora-1.1.1.tar.bz2" \
+  "" \
+  "292ab65cedd5021d6b7ddd117e07cd8e" \
+  "http://downloads.xiph.org/releases/theora/"
+
+download \
   "2.8.tar.gz" \
   "ffmpeg2.8.tar.gz" \
   "nil" \
@@ -137,6 +179,48 @@ cd $BUILD_DIR/opus*
 make
 make install
 
+echo "*** Building freetype2 ***"
+cd $BUILD_DIR/freetype-2*
+./configure --prefix=$TARGET_DIR --disable-shared
+make
+make install
+
+echo "*** Building fribidi ***"
+cd $BUILD_DIR/fribidi*
+./configure --prefix=$TARGET_DIR --disable-shared
+make
+make install
+
+echo "*** Building libass ***"
+cd $BUILD_DIR/libass*
+./configure --prefix=$TARGET_DIR --disable-shared
+make
+make install
+
+echo "*** Building libogg ***"
+cd $BUILD_DIR/libogg*
+./configure --prefix=$TARGET_DIR --disable-shared
+make
+make install
+
+echo "*** Building libvorbis ***"
+cd $BUILD_DIR/libvorbis*
+./configure --prefix=$TARGET_DIR --disable-shared
+make
+make install
+
+echo "*** Building SDL ***"
+cd $BUILD_DIR/libvorbis*
+./configure --prefix=$TARGET_DIR --disable-shared
+make
+make install
+
+echo "*** Building libtheora ***"
+cd $BUILD_DIR/libtheora*
+./configure --prefix=$TARGET_DIR --disable-shared
+make
+make install
+
 echo "*** Building libvpx ***"
 cd $BUILD_DIR/libvpx*
 PATH="$BIN_DIR:$PATH" ./configure --prefix=$TARGET_DIR --disable-examples --disable-unit-tests
@@ -148,6 +232,8 @@ if which nproc;then
 	NPROC="`nproc`"
 elif [ -f /proc/cpuinfo ];then
 	NPROC="`grep -c ^processor /proc/cpuinfo`"
+elif which sysctl;then
+	NPROC="sysctl -n hw.ncpu"
 fi
 
 # FFMpeg
