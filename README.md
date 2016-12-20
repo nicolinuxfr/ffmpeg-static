@@ -18,6 +18,7 @@ Build dependencies
     # install XCode, it can be found at http://developer.apple.com/
     # (apple login needed)
     # brew install libtool autoconf cmake automake
+    # For MacOS greater than 10.8 you aslo needs to install [X11 lib](http://xquartz.macosforge.org/) manually to let ffplay get compiled
 
 Build & "install"
 -----------------
