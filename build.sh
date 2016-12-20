@@ -210,7 +210,15 @@ make
 make install
 
 echo "*** Building SDL ***"
-cd $BUILD_DIR/libvorbis*
+cd $BUILD_DIR/SDL-1*
+case "$OSTYPE" in
+  #solaris*) echo "SOLARIS" ;;
+  darwin*)   patch -p1 <../../patches/sdl/sdl-1.2.15-macosx-compile.patch;; 
+  #linux*)   echo "LINUX" ;;
+  #bsd*)     echo "BSD" ;;
+  #msys*)    echo "WINDOWS" ;;
+  #*)        echo "unknown: $OSTYPE" ;;
+esac
 ./configure --prefix=$TARGET_DIR --disable-shared
 make
 make install
