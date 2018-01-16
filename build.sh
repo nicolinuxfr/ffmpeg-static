@@ -64,7 +64,7 @@ download \
   "http://download.videolan.org/pub/videolan/x264/snapshots/"
 
 download \
-  "x265_1.7.tar.gz" \
+  "x265_2.6.tar.gz" \
   "" \
   "nil" \
   "https://bitbucket.org/multicoreware/x265/downloads/"
@@ -136,10 +136,10 @@ download \
   "http://downloads.xiph.org/releases/theora/"
 
 download \
-  "2.8.tar.gz" \
-  "ffmpeg2.8.tar.gz" \
+  "ffmpeg-3.4.1.tar.bz2" \
+  "" \
   "nil" \
-  "https://github.com/FFmpeg/FFmpeg/archive/release"
+  "http://ffmpeg.org/releases/"
 
 echo "*** Building yasm ***"
 cd $BUILD_DIR/yasm*
@@ -257,8 +257,9 @@ esac
 
 # FFMpeg
 echo "*** Building FFmpeg ***"
-cd $BUILD_DIR/FFmpeg*
+cd $BUILD_DIR/ffmpeg*
 PATH="$BIN_DIR:$PATH" \
+LDFLAGS="${LDFLAGS} -lstdc++" \
 PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig" ./configure \
   --prefix="$TARGET_DIR" \
   --pkg-config-flags="--static" \
