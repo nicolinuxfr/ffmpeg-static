@@ -76,67 +76,13 @@ download \
   "https://github.com/mstorsjo/fdk-aac/tarball"
 
 download \
-  "lame-3.99.5.tar.gz" \
+  "lame-3.100.tar.gz" \
   "" \
-  "84835b313d4a8b68f5349816d33e07ce" \
-  "http://downloads.sourceforge.net/project/lame/lame/3.99"
+  "83e260acbe4389b54fe08e0bdbf7cddb" \
+  "http://sources.openwrt.org/"
 
 download \
-  "opus-1.1.tar.gz" \
-  "" \
-  "c5a8cf7c0b066759542bc4ca46817ac6" \
-  "http://downloads.xiph.org/releases/opus"
-
-download \
-  "v1.5.0.tar.gz" \
-  "" \
-  "0c662bc7525afe281badb3175140d35c" \
-  "https://github.com/webmproject/libvpx/archive/"
-
-download \
-  "freetype-2.7.tar.gz" \
-  "" \
-  "337139e5c7c5bd645fe130608e0fa8b5" \
-  "http://download.savannah.gnu.org/releases/freetype/"
-
-download \
-  "fribidi-0.19.7.tar.bz2" \
-  "" \
-  "6c7e7cfdd39c908f7ac619351c1c5c23" \
-  "http://fribidi.org/download/"
-
-download \
-  "libass-0.13.4.tar.gz" \
-  "" \
-  "158e242c1bd890866e95526910cb6873" \
-  "https://github.com/libass/libass/releases/download/0.13.4/"
-
-download \
-  "libogg-1.3.1.tar.gz" \
-  "" \
-  "ba526cd8f4403a5d351a9efaa8608fbc" \
-  "http://downloads.xiph.org/releases/ogg/"
-
-download \
-  "libvorbis-1.3.3.tar.gz" \
-  "" \
-  "6b1a36f0d72332fae5130688e65efe1f" \
-  "http://downloads.xiph.org/releases/vorbis/"
-
-download \
-  "SDL-1.2.15.tar.gz" \
-  "" \
-  "9d96df8417572a2afb781a7c4c811a85" \
-  "http://www.libsdl.org/release/"
-
-download \
-  "libtheora-1.1.1.tar.bz2" \
-  "" \
-  "292ab65cedd5021d6b7ddd117e07cd8e" \
-  "http://downloads.xiph.org/releases/theora/"
-
-download \
-  "ffmpeg-3.4.1.tar.bz2" \
+  "ffmpeg-snapshot.tar.bz2" \
   "" \
   "nil" \
   "http://ffmpeg.org/releases/"
@@ -173,68 +119,6 @@ cd $BUILD_DIR/lame*
 make
 make install
 
-echo "*** Building opus ***"
-cd $BUILD_DIR/opus*
-./configure --prefix=$TARGET_DIR --disable-shared
-make
-make install
-
-echo "*** Building freetype2 ***"
-cd $BUILD_DIR/freetype-2*
-./configure --prefix=$TARGET_DIR --disable-shared
-make
-make install
-
-echo "*** Building fribidi ***"
-cd $BUILD_DIR/fribidi*
-./configure --prefix=$TARGET_DIR --disable-shared
-make
-make install
-
-echo "*** Building libass ***"
-cd $BUILD_DIR/libass*
-./configure --prefix=$TARGET_DIR --disable-shared
-make
-make install
-
-echo "*** Building libogg ***"
-cd $BUILD_DIR/libogg*
-./configure --prefix=$TARGET_DIR --disable-shared
-make
-make install
-
-echo "*** Building libvorbis ***"
-cd $BUILD_DIR/libvorbis*
-./configure --prefix=$TARGET_DIR --disable-shared
-make
-make install
-
-echo "*** Building SDL ***"
-cd $BUILD_DIR/SDL-1*
-case "$OSTYPE" in
-  #solaris*) echo "SOLARIS" ;;
-  darwin*)   patch -p1 <../../patches/sdl/sdl-1.2.15-macosx-compile.patch;; 
-  #linux*)   echo "LINUX" ;;
-  #bsd*)     echo "BSD" ;;
-  #msys*)    echo "WINDOWS" ;;
-  #*)        echo "unknown: $OSTYPE" ;;
-esac
-./configure --prefix=$TARGET_DIR --disable-shared
-make
-make install
-
-echo "*** Building libtheora ***"
-cd $BUILD_DIR/libtheora*
-./configure --prefix=$TARGET_DIR --disable-shared
-make
-make install
-
-echo "*** Building libvpx ***"
-cd $BUILD_DIR/libvpx*
-PATH="$BIN_DIR:$PATH" ./configure --prefix=$TARGET_DIR --disable-examples --disable-unit-tests
-PATH="$BIN_DIR:$PATH" make -j $jval
-make install
-
 NPROC=1
 if which nproc;then
 	NPROC="`nproc`"
@@ -266,20 +150,18 @@ PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig" ./configure \
   --extra-cflags="-I$TARGET_DIR/include" \
   --extra-ldflags="-L$TARGET_DIR/lib $FFMPEG_EXTRA_LDFLAG" \
   --bindir="$BIN_DIR" \
-  --enable-ffplay \
-  --enable-ffserver \
   --enable-gpl \
-  --enable-libass \
+  --enable-pthreads \
   --enable-libfdk-aac \
-  --enable-libfreetype \
   --enable-libmp3lame \
-  --enable-libopus \
-  --enable-libtheora \
-  --enable-libvorbis \
-  --enable-libvpx \
+  --disable-decoder=libvpx \
   --enable-libx264 \
   --enable-libx265 \
-  --enable-nonfree
+  --enable-avfilter \
+  --enable-filters \
+  --enable-nonfree \
+  --enable-runtime-cpudetect \
+  --arch=x86_64
 PATH="$BIN_DIR:$PATH" make -j$NPROC
 make install
 make distclean
